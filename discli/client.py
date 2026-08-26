@@ -8,7 +8,6 @@ import aiohttp
 API_BASE = "https://discord.com/api/v10"
 GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json"
 
-
 class DiscordClient:
     def __init__(self, token: str):
         self.token = token
