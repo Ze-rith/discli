@@ -7,7 +7,7 @@
 ```bash
 brew install pipx
 pipx ensurepath              # 최초 1회, PATH 잡아줌 → 새 터미널 열기
-pipx install discord-cli
+pipx install discli
 ```
 
 ## 실행
