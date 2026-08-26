@@ -12,8 +12,7 @@ def clear_token() -> None:
 
 
 def prompt_and_save() -> str:
-    print("디스코드 토큰이 필요합니다.")
-    print("브라우저에서 북마클릿으로 복사한 뒤 아래에 붙여넣으세요.")
+    print("디스코드 토큰이 필요합니다. (README 참고)")
     print("(입력은 화면에 표시되지 않습니다)")
     while True:
         token = getpass.getpass("token: ").strip()
