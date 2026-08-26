@@ -7,7 +7,7 @@
 ```bash
 brew install pipx
 pipx ensurepath              # 최초 1회, PATH 잡아줌 → 새 터미널 열기
-pipx install /Users/zerith/Documents/GitHub/javareal/discord-cli
+pipx install discord-cli
 ```
 
 ## 실행
