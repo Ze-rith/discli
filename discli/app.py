@@ -1,11 +1,12 @@
 import asyncio
 from datetime import datetime
 
+import aiohttp
 from prompt_toolkit import PromptSession
 from prompt_toolkit.patch_stdout import patch_stdout
 
 from .client import DiscordClient
-from .config import load_token
+from .config import clear_token, load_token, prompt_and_save
 
 
 def ts(iso: str) -> str:
@@ -28,18 +29,36 @@ HELP = """\
 """
 
 
+async def authenticate() -> tuple[DiscordClient, dict]:
+    token = load_token()
+    for attempt in range(3):
+        client = DiscordClient(token)
+        await client.start()
+        try:
+            me = await client.get_me()
+            return client, me
+        except aiohttp.ClientResponseError as e:
+            await client.close()
+            if e.status == 401:
+                print("토큰이 만료되었거나 유효하지 않습니다.")
+                clear_token()
+                token = prompt_and_save()
+                continue
+            raise
+    raise RuntimeError("인증 실패 (3회 시도)")
+
+
 class Repl:
-    def __init__(self):
-        self.client = DiscordClient(load_token())
+    def __init__(self, client: DiscordClient, me: dict):
+        self.client = client
+        self.me = me
         self.guilds: list[dict] = []
         self.channels: list[dict] = []
         self.current: dict | None = None
         self.session = PromptSession()
 
     async def run(self):
-        await self.client.start()
-        me = await self.client.get_me()
-        print(f"connected as {me.get('username')}  (type :h for help)")
+        print(f"connected as {self.me.get('username')}  (type :h for help)")
         self.client.on("MESSAGE_CREATE", self._on_msg)
         await self.client.connect_gateway()
         asyncio.create_task(self.client.run_gateway())
@@ -140,9 +159,17 @@ class Repl:
             self._print_msg(data)
 
 
+async def _amain():
+    client, me = await authenticate()
+    try:
+        await Repl(client, me).run()
+    finally:
+        await client.close()
+
+
 def main():
     try:
-        asyncio.run(Repl().run())
+        asyncio.run(_amain())
     except KeyboardInterrupt:
         pass
 
