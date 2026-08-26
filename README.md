@@ -31,20 +31,3 @@ discli
 :h              도움말
 :q              종료
 ```
-
-명령어 아닌 텍스트 = 현재 채널로 전송.
-
-## 업데이트
-
-코드 고친 뒤:
-
-```bash
-pipx reinstall discli
-```
-
-## 삭제
-
-```bash
-pipx uninstall discli
-rm ~/.discord_cli_token
-```
