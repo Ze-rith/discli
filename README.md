@@ -1,8 +1,6 @@
 # discli
 
-터미널에서 `discli` 한 방으로 실행되는 디스코드 REPL. 색깔 없음.
-
-**경고**: user token 사용은 디스코드 ToS 위반. 자기 책임.
+터미널에서 `discli` 
 
 ## 설치 (pipx)
 
