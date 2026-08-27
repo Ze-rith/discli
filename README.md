@@ -7,7 +7,7 @@
 ```bash
 brew install pipx
 pipx ensurepath              # 최초 1회, PATH 잡아줌 → 새 터미널 열기
-pipx install discli
+pipx install zdiscli
 ```
 
 ## 실행
@@ -43,3 +43,7 @@ javascript:(()=>{const o=XMLHttpRequest.prototype.setRequestHeader;XMLHttpReques
 :h              도움말
 :q              종료
 ```
+
+## 만든 사람
+
+[@Ze-rith](https://github.com/Ze-rith)
